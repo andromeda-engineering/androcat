@@ -156,7 +156,7 @@ test('xterm replay: incremental ASCII diff round-trip', async (t) => {
   await writeAnsi(term, ansiA)
 
   const frameB = cloneBuffer(frameA)
-  writeText(frameB, cols, 1, 2, 'hello ratatat')
+  writeText(frameB, cols, 1, 2, 'hello androcat')
   writeText(frameB, cols, 3, 1, 'status: updated')
 
   const ansiB = renderer.renderDiff(frameB)

@@ -6,7 +6,7 @@ import React, { createElement, act } from 'react'
 import { create as createTestRenderer } from 'react-test-renderer'
 import EventEmitter from 'eventemitter3'
 
-import { RatatatContext } from '../dist/hooks.js'
+import { AndrocatContext } from '../dist/hooks.js'
 import { FocusProvider, FocusContext, useFocus, useFocusManager } from '../dist/focus.js'
 import { Newline, Spacer } from '../dist/react.js'
 

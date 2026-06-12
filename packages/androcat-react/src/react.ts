@@ -1,10 +1,10 @@
 // @ts-nocheck — reconciler createContainer arity varies between React versions
 import React from 'react'
-import { RatatatApp, InputParser, createInlineLoop, terminalSize, type InlineOptions } from '@andromeda-eng/androcat-core'
+import { AndrocatApp, InputParser, createInlineLoop, terminalSize, type InlineOptions } from '@andromeda-eng/androcat-core'
 import { LayoutNode } from './layout.js'
-import { RatatatReconciler, setOnAfterCommit } from './reconciler.js'
+import { AndrocatReconciler, setOnAfterCommit } from './reconciler.js'
 import { renderTreeToBuffer } from './renderer.js'
-import { RatatatContext, useInput } from './hooks.js'
+import { AndrocatContext, useInput } from './hooks.js'
 import { FocusProvider, useFocusManager } from './focus.js'
 
 import { Styles } from './styles.js'
@@ -183,11 +183,11 @@ const TabHandler: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 // Global mount utility
 /** Ink-compat render options */
 export interface RenderOptions {
-  /** Ignored — Ratatat is always concurrent */
+  /** Ignored — Androcat is always concurrent */
   concurrent?: boolean
   /** Target frames per second for the render loop. Default: 60 */
   maxFps?: number
-  /** Ignored — Ratatat always patches console */
+  /** Ignored — Androcat always patches console */
   patchConsole?: boolean
   /** Ignored — Ctrl+C always exits */
   exitOnCtrlC?: boolean
@@ -202,14 +202,14 @@ export interface Instance {
   rerender: (element: React.ReactElement) => void
   unmount: () => void
   waitUntilExit: () => Promise<void>
-  /** ratatat-internal: direct app access */
-  app: RatatatApp
-  /** ratatat-internal: input parser */
+  /** androcat-internal: direct app access */
+  app: AndrocatApp
+  /** androcat-internal: input parser */
   input: InputParser
 }
 
 export function render(element: React.ReactElement, options?: RenderOptions): Instance {
-  const app = new RatatatApp()
+  const app = new AndrocatApp()
   const input = new InputParser(process.stdin)
 
   const rootNode = new LayoutNode()
@@ -219,7 +219,7 @@ export function render(element: React.ReactElement, options?: RenderOptions): In
   rootNode.yogaNode.setHeight(height)
 
   // Hook Reconciler up to the root Yoga Node container
-  const container = RatatatReconciler.createContainer(
+  const container = AndrocatReconciler.createContainer(
     rootNode,
     0, // Legacy root
     null, // hydrate
@@ -233,7 +233,7 @@ export function render(element: React.ReactElement, options?: RenderOptions): In
   // Wrap element — reused on rerender()
   const wrap = (el: React.ReactElement) =>
     React.createElement(
-      RatatatContext.Provider,
+      AndrocatContext.Provider,
       {
         value: {
           app,
@@ -245,7 +245,7 @@ export function render(element: React.ReactElement, options?: RenderOptions): In
       React.createElement(FocusProvider, null, React.createElement(TabHandler, null, el)),
     )
 
-  RatatatReconciler.updateContainer(wrap(element) as any, container, null, () => {})
+  AndrocatReconciler.updateContainer(wrap(element) as any, container, null, () => {})
 
   // Paint function: layout + render to buffer + Rust diff/write
   const calcLayout = (w: number, h: number) => rootNode.calculateLayout(w, h)
@@ -318,7 +318,7 @@ export function render(element: React.ReactElement, options?: RenderOptions): In
   return {
     /** Re-render with a new root element */
     rerender(newElement: React.ReactElement) {
-      RatatatReconciler.updateContainer(wrap(newElement) as any, container, null, () => {})
+      AndrocatReconciler.updateContainer(wrap(newElement) as any, container, null, () => {})
     },
     /** Unmount the app and restore the terminal */
     unmount() {
@@ -328,7 +328,7 @@ export function render(element: React.ReactElement, options?: RenderOptions): In
     waitUntilExit() {
       return exitPromise
     },
-    // Internal access — not part of Ink's public API but useful for ratatat-native code
+    // Internal access — not part of Ink's public API but useful for androcat-native code
     app,
     input,
   }
@@ -380,7 +380,7 @@ export function renderInline(
     quit: () => loop.stop(),
   }
 
-  const container = RatatatReconciler.createContainer(
+  const container = AndrocatReconciler.createContainer(
     rootNode,
     0,
     null,
@@ -393,7 +393,7 @@ export function renderInline(
 
   const wrap = (el: React.ReactElement) =>
     React.createElement(
-      RatatatContext.Provider,
+      AndrocatContext.Provider,
       {
         value: {
           app: appLike as any,
@@ -405,7 +405,7 @@ export function renderInline(
       React.createElement(FocusProvider, null, React.createElement(TabHandler, null, el)),
     )
 
-  RatatatReconciler.updateContainer(wrap(element) as any, container, null, () => {})
+  AndrocatReconciler.updateContainer(wrap(element) as any, container, null, () => {})
 
   let pendingCommit = false
   setOnAfterCommit(() => {

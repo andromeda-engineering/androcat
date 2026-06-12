@@ -1,7 +1,7 @@
 import test from 'ava'
 import React, { createElement } from 'react'
 import EventEmitter from 'eventemitter3'
-import { RatatatContext, useInput, usePaste } from '../dist/hooks.js'
+import { AndrocatContext, useInput, usePaste } from '../dist/hooks.js'
 import { create as createTestRenderer } from 'react-test-renderer'
 
 // Configure React act() environment
@@ -38,7 +38,7 @@ test('useInput: input.on called exactly once per context mount', async (t) => {
 
   let renderer
   await React.act(async () => {
-    renderer = createTestRenderer(createElement(RatatatContext.Provider, { value: ctx }, createElement(TestComponent)))
+    renderer = createTestRenderer(createElement(AndrocatContext.Provider, { value: ctx }, createElement(TestComponent)))
   })
 
   t.is(onCalls.filter((e) => e === 'keydown').length, 1, 'keydown subscribed once')
@@ -63,7 +63,7 @@ test('useInput: re-render does NOT call input.on again', async (t) => {
   let renderer
   await React.act(async () => {
     renderer = createTestRenderer(
-      createElement(RatatatContext.Provider, { value: ctx }, createElement(TestComponent, { handlerFn: () => {} })),
+      createElement(AndrocatContext.Provider, { value: ctx }, createElement(TestComponent, { handlerFn: () => {} })),
     )
   })
 
@@ -71,7 +71,7 @@ test('useInput: re-render does NOT call input.on again', async (t) => {
 
   await React.act(async () => {
     renderer.update(
-      createElement(RatatatContext.Provider, { value: ctx }, createElement(TestComponent, { handlerFn: () => {} })),
+      createElement(AndrocatContext.Provider, { value: ctx }, createElement(TestComponent, { handlerFn: () => {} })),
     )
   })
 
@@ -242,7 +242,7 @@ test('usePaste: subscribes to paste and receives payload', async (t) => {
 
   let renderer
   await React.act(async () => {
-    renderer = createTestRenderer(createElement(RatatatContext.Provider, { value: ctx }, createElement(TestComponent)))
+    renderer = createTestRenderer(createElement(AndrocatContext.Provider, { value: ctx }, createElement(TestComponent)))
   })
 
   t.is(onCalls.filter((e) => e === 'paste').length, 1, 'paste subscribed once')
@@ -273,7 +273,7 @@ test('usePaste: isActive=false does not subscribe or fire', async (t) => {
 
   let renderer
   await React.act(async () => {
-    renderer = createTestRenderer(createElement(RatatatContext.Provider, { value: ctx }, createElement(TestComponent)))
+    renderer = createTestRenderer(createElement(AndrocatContext.Provider, { value: ctx }, createElement(TestComponent)))
   })
 
   t.is(onCalls.filter((e) => e === 'paste').length, 0, 'paste not subscribed when inactive')
@@ -305,7 +305,7 @@ test('usePaste + useInput: paste does not go through useInput channel', async (t
 
   let renderer
   await React.act(async () => {
-    renderer = createTestRenderer(createElement(RatatatContext.Provider, { value: ctx }, createElement(TestComponent)))
+    renderer = createTestRenderer(createElement(AndrocatContext.Provider, { value: ctx }, createElement(TestComponent)))
   })
 
   emitter.emit('paste', 'chunked\ntext')

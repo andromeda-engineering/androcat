@@ -1,11 +1,11 @@
 import test from 'ava'
-import { RatatatApp } from '../dist/app.js'
+import { AndrocatApp } from '../dist/app.js'
 
 // ─── TestApp: subclass that stubs out N-API terminal calls ───────────────────
 // TerminalSetup.enter/leave/getSize are N-API methods that can't be monkeypatched.
-// We subclass RatatatApp and override start()/stop() to bypass the terminal.
+// We subclass AndrocatApp and override start()/stop() to bypass the terminal.
 
-class TestApp extends RatatatApp {
+class TestApp extends AndrocatApp {
   // Override start — skip TerminalSetup.enter(), just set isRunning
   start() {
     // @ts-ignore — accessing private field for test isolation

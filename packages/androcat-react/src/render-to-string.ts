@@ -1,9 +1,9 @@
 // @ts-nocheck — reconciler createContainer arity varies between React versions
 import React from 'react'
 import { LayoutNode } from './layout.js'
-import { RatatatReconciler } from './reconciler.js'
+import { AndrocatReconciler } from './reconciler.js'
 import { renderTreeToBuffer } from './renderer.js'
-import { RatatatContext } from './hooks.js'
+import { AndrocatContext } from './hooks.js'
 import { FocusProvider } from './focus.js'
 import { Cell } from '@andromeda-eng/androcat-core'
 
@@ -44,13 +44,13 @@ export function renderToString(element: React.ReactElement, options?: RenderToSt
   }
 
   const wrapped = React.createElement(
-    RatatatContext.Provider,
+    AndrocatContext.Provider,
     { value: noopContext },
     React.createElement(FocusProvider, null, element),
   )
 
   // Create container in legacy (synchronous) mode
-  const container = RatatatReconciler.createContainer(
+  const container = AndrocatReconciler.createContainer(
     rootNode,
     0, // LegacyRoot
     null,
@@ -62,8 +62,8 @@ export function renderToString(element: React.ReactElement, options?: RenderToSt
   )
 
   // Render synchronously
-  RatatatReconciler.updateContainerSync(wrapped as any, container, null, () => {})
-  RatatatReconciler.flushSyncWork()
+  AndrocatReconciler.updateContainerSync(wrapped as any, container, null, () => {})
+  AndrocatReconciler.flushSyncWork()
 
   // Layout and paint into a buffer
   rootNode.calculateLayout(cols, rows)
@@ -88,8 +88,8 @@ export function renderToString(element: React.ReactElement, options?: RenderToSt
   }
 
   // Teardown: unmount the tree so reconciler cleans up
-  RatatatReconciler.updateContainerSync(null as any, container, null, () => {})
-  RatatatReconciler.flushSyncWork()
+  AndrocatReconciler.updateContainerSync(null as any, container, null, () => {})
+  AndrocatReconciler.flushSyncWork()
   rootNode.destroy()
 
   return lines.join('\n')

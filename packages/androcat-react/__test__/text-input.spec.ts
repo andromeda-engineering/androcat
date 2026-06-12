@@ -1,7 +1,7 @@
 import test from 'ava'
 import React from 'react'
 import { create, act } from 'react-test-renderer'
-import { RatatatContext, useTextInput } from '../dist/hooks.js'
+import { AndrocatContext, useTextInput } from '../dist/hooks.js'
 import EventEmitter from 'eventemitter3'
 
 // @ts-ignore
@@ -22,7 +22,7 @@ function makeContext() {
 }
 
 function Wrapper({ ctx, children }: { ctx: any; children: React.ReactNode }) {
-  return React.createElement(RatatatContext.Provider, { value: ctx }, children)
+  return React.createElement(AndrocatContext.Provider, { value: ctx }, children)
 }
 
 async function renderTextInput(opts: any = {}) {

@@ -4,7 +4,7 @@ import EventEmitter from 'eventemitter3'
 const DEC_2026_ON = '\x1b[?2026h'
 const DEC_2026_OFF = '\x1b[?2026l'
 
-export class RatatatApp extends EventEmitter {
+export class AndrocatApp extends EventEmitter {
   private renderer: Renderer
   private terminal: TerminalGuard | null = null
   private backBuffer: Uint32Array

@@ -129,7 +129,7 @@ export type Styles = {
   strikethrough?: boolean
   inverse?: boolean
 
-  // Terminal-specific numeric props (ratatat native)
+  // Terminal-specific numeric props (androcat native)
   fg?: number | string
   bg?: number | string
   styles?: number

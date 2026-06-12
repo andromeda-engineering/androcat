@@ -28,7 +28,7 @@ export const FocusContext = createContext<FocusContextProps>({
   focus() {},
 })
 
-FocusContext.displayName = 'RatatatFocusContext'
+FocusContext.displayName = 'AndrocatFocusContext'
 
 // ─── Focus provider ───────────────────────────────────────────────────────────
 

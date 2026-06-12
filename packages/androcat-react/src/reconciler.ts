@@ -32,9 +32,9 @@ export function setOnAfterCommit(fn: (() => void) | null) {
 let currentUpdatePriority = NoEventPriority
 
 /**
- * Resolve Ink-compatible color/style props into ratatat's numeric fg/bg/styles values.
+ * Resolve Ink-compatible color/style props into androcat's numeric fg/bg/styles values.
  * Ink uses: color="green", backgroundColor="red", bold, italic, dim, underline, etc.
- * Ratatat uses: fg=<ansi-index>, bg=<ansi-index>, styles=<bitfield>
+ * Androcat uses: fg=<ansi-index>, bg=<ansi-index>, styles=<bitfield>
  */
 function resolveNodeColors(props: Props): { fg: number; bg: number; styles: number } {
   // fg: explicit numeric fg > color prop > 255 (terminal default)
@@ -100,7 +100,7 @@ const hostConfig: ReactReconciler.HostConfig<
     }
     applyStyles(node.yogaNode, stylesToApply)
 
-    // Resolve color/style props (Ink-compat + ratatat-native)
+    // Resolve color/style props (Ink-compat + androcat-native)
     const { fg, bg, styles } = resolveNodeColors(props)
     node.fg = fg
     node.bg = bg
@@ -270,4 +270,4 @@ const hostConfig: ReactReconciler.HostConfig<
   HostTransitionContext: createContext(null) as any,
 } as any
 
-export const RatatatReconciler = ReactReconciler(hostConfig)
+export const AndrocatReconciler = ReactReconciler(hostConfig)

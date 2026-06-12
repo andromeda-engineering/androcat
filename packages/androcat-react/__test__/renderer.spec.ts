@@ -231,7 +231,7 @@ test.serial('detachDeletedInstance frees Yoga nodes when React removes children'
   const React = (await import('react')).default
   const { act } = await import('react')
   const { create: createTestRenderer } = await import('react-test-renderer')
-  const { RatatatReconciler } = await import('../dist/reconciler.js')
+  const { AndrocatReconciler } = await import('../dist/reconciler.js')
 
   // @ts-ignore
   globalThis.IS_REACT_ACT_ENVIRONMENT = true
@@ -244,11 +244,11 @@ test.serial('detachDeletedInstance frees Yoga nodes when React removes children'
   }
 
   const root = new LayoutNode()
-  const container = RatatatReconciler.createContainer(root, 0, null, false, null, '', () => {}, null)
+  const container = AndrocatReconciler.createContainer(root, 0, null, false, null, '', () => {}, null)
 
   // Mount 4 children
   await act(async () => {
-    RatatatReconciler.updateContainer(
+    AndrocatReconciler.updateContainer(
       React.createElement(
         'box',
         null,
@@ -268,7 +268,7 @@ test.serial('detachDeletedInstance frees Yoga nodes when React removes children'
 
   // Shrink to 1 — removes 3 nodes
   await act(async () => {
-    RatatatReconciler.updateContainer(
+    AndrocatReconciler.updateContainer(
       React.createElement('box', null, React.createElement('text', null, 'A')),
       container,
       null,

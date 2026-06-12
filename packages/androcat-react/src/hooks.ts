@@ -1,15 +1,15 @@
 import { createContext, useContext, useEffect, useRef, useState, useCallback, useMemo, type RefObject } from 'react'
-import { RatatatApp, InputParser, type MouseEvent } from '@andromeda-eng/androcat-core'
+import { AndrocatApp, InputParser, type MouseEvent } from '@andromeda-eng/androcat-core'
 import { LayoutNode } from './layout.js'
 
-export interface RatatatContextProps {
-  app: RatatatApp
+export interface AndrocatContextProps {
+  app: AndrocatApp
   input: InputParser
   writeStdout: (text: string) => void
   writeStderr: (text: string) => void
 }
 
-export const RatatatContext = createContext<RatatatContextProps | null>(null)
+export const AndrocatContext = createContext<AndrocatContextProps | null>(null)
 
 export interface Key {
   upArrow: boolean
@@ -38,10 +38,10 @@ export type InputHandler = (input: string, key: Key) => void
  * Always invokes the latest handler passed by the caller.
  */
 export const useInput = (handler: InputHandler) => {
-  const context = useContext(RatatatContext)
+  const context = useContext(AndrocatContext)
 
   if (!context) {
-    throw new Error('useInput must be used within a Ratatat App environment')
+    throw new Error('useInput must be used within a Androcat App environment')
   }
 
   // 1. Stable ref initialized with the first handler value
@@ -163,9 +163,9 @@ export type PasteHandler = (text: string) => void
  * listener is active.
  */
 export const usePaste = (handler: PasteHandler, options: UsePasteOptions = {}) => {
-  const context = useContext(RatatatContext)
+  const context = useContext(AndrocatContext)
   if (!context) {
-    throw new Error('usePaste must be used within a Ratatat App environment')
+    throw new Error('usePaste must be used within a Androcat App environment')
   }
 
   const { isActive = true } = options
@@ -190,12 +190,12 @@ export const usePaste = (handler: PasteHandler, options: UsePasteOptions = {}) =
 }
 
 /**
- * Raw access to the RatatatContext — app instance + input parser.
+ * Raw access to the AndrocatContext — app instance + input parser.
  * Useful for advanced integrations (e.g. DevTools, custom hooks).
  */
-export const useRatatatContext = () => {
-  const context = useContext(RatatatContext)
-  if (!context) throw new Error('useRatatatContext must be used within a Ratatat App environment')
+export const useAndrocatContext = () => {
+  const context = useContext(AndrocatContext)
+  if (!context) throw new Error('useAndrocatContext must be used within a Androcat App environment')
   return context
 }
 
@@ -204,16 +204,16 @@ export const useRatatatContext = () => {
  * exit() triggers a clean shutdown (restores terminal, stops input, exits process).
  */
 export const useApp = () => {
-  const context = useContext(RatatatContext)
+  const context = useContext(AndrocatContext)
 
   if (!context) {
-    throw new Error('useApp must be used within a Ratatat App environment')
+    throw new Error('useApp must be used within a Androcat App environment')
   }
 
   return {
     // Ink-compatible: const { exit } = useApp()
     exit: () => context.app.quit(),
-    // ratatat-native: direct app access
+    // androcat-native: direct app access
     quit: () => context.app.quit(),
   }
 }
@@ -223,10 +223,10 @@ export const useApp = () => {
  * Ink-compatible: const { columns, rows } = useWindowSize()
  */
 export const useWindowSize = () => {
-  const context = useContext(RatatatContext)
+  const context = useContext(AndrocatContext)
 
   if (!context) {
-    throw new Error('useWindowSize must be used within a Ratatat App environment')
+    throw new Error('useWindowSize must be used within a Androcat App environment')
   }
 
   const [size, setSize] = useState(() => context.app.getSize())
@@ -255,7 +255,7 @@ const toRawNewlines = (text: string) => text.replace(/\r?\n/g, '\r\n')
  * Output is buffered while the alternate screen is active and flushed on exit.
  */
 export const useStdout = () => {
-  const context = useContext(RatatatContext)
+  const context = useContext(AndrocatContext)
   return {
     stdout: process.stdout,
     write: (text: string) => (context ? context.writeStdout(text) : process.stdout.write(toRawNewlines(text))),
@@ -268,7 +268,7 @@ export const useStdout = () => {
  * Output is buffered while the alternate screen is active and flushed on exit.
  */
 export const useStderr = () => {
-  const context = useContext(RatatatContext)
+  const context = useContext(AndrocatContext)
   return {
     stderr: process.stderr,
     write: (text: string) => (context ? context.writeStderr(text) : process.stderr.write(toRawNewlines(text))),
@@ -325,7 +325,7 @@ const emptyMetrics: BoxMetrics = { width: 0, height: 0, left: 0, top: 0 }
  * Ink-compatible: const { width, height, left, top, hasMeasured } = useBoxMetrics(ref)
  */
 export const useBoxMetrics = (ref: RefObject<LayoutNode | null>): UseBoxMetricsResult => {
-  const context = useContext(RatatatContext)
+  const context = useContext(AndrocatContext)
   const [metrics, setMetrics] = useState<BoxMetrics>(emptyMetrics)
   const [hasMeasured, setHasMeasured] = useState(false)
 
@@ -365,14 +365,14 @@ export const useBoxMetrics = (ref: RefObject<LayoutNode | null>): UseBoxMetricsR
 
 /**
  * Returns whether a screen reader is enabled.
- * Ratatat stub: always returns false — no screen reader support.
+ * Androcat stub: always returns false — no screen reader support.
  * Ink-compatible: const isEnabled = useIsScreenReaderEnabled()
  */
 export const useIsScreenReaderEnabled = (): boolean => false
 
 /**
  * Returns cursor positioning controls.
- * Ratatat stub: ratatat hides the cursor during rendering (alternate screen).
+ * Androcat stub: androcat hides the cursor during rendering (alternate screen).
  * setCursorPosition is a no-op — provided for Ink API compatibility only.
  * Ink-compatible: const { setCursorPosition } = useCursor()
  */
@@ -470,8 +470,8 @@ export type MouseHandler = (event: MouseEvent) => void
  * button values: 'left' | 'right' | 'middle' | 'scrollUp' | 'scrollDown'
  */
 export const useMouse = (handler: MouseHandler) => {
-  const context = useContext(RatatatContext)
-  if (!context) throw new Error('useMouse must be used within a Ratatat App environment')
+  const context = useContext(AndrocatContext)
+  if (!context) throw new Error('useMouse must be used within a Androcat App environment')
 
   const handlerRef = useRef<MouseHandler>(handler)
   useEffect(() => {
@@ -653,7 +653,7 @@ export const useTextInput = ({
   })
 
   // Bracketed paste — insert full paste text at cursor
-  const context = useContext(RatatatContext)
+  const context = useContext(AndrocatContext)
   useEffect(() => {
     if (!context || !isActive) return
     const onPaste = (text: string) => {

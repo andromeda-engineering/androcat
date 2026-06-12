@@ -83,7 +83,7 @@ test('resolveColor: unknown string → 255 (terminal default)', (t) => {
 
 import React, { createElement } from 'react'
 import { LayoutNode } from '../dist/layout.js'
-import { RatatatReconciler } from '../dist/reconciler.js'
+import { AndrocatReconciler } from '../dist/reconciler.js'
 import { renderTreeToBuffer } from '../dist/renderer.js'
 import { Cell } from '@andromeda-eng/androcat-core'
 
@@ -95,9 +95,9 @@ const COLS = 20,
 
 async function renderApp(element: React.ReactElement) {
   const root = new LayoutNode()
-  const container = RatatatReconciler.createContainer(root, 0, null, false, null, '', () => {}, null)
+  const container = AndrocatReconciler.createContainer(root, 0, null, false, null, '', () => {}, null)
   await React.act(async () => {
-    RatatatReconciler.updateContainer(element, container, null, () => {})
+    AndrocatReconciler.updateContainer(element, container, null, () => {})
   })
   root.calculateLayout(COLS, ROWS)
   const buffer = new Uint32Array(COLS * ROWS * 2)
@@ -157,13 +157,13 @@ test('ink compat: color="white" + backgroundColor="blue" → fg=7 bg=4', async (
   t.is(Cell.getBg(attrAt(buf, 0, 0)), 4)
 })
 
-test('ink compat: numeric fg/bg still works (ratatat native)', async (t) => {
+test('ink compat: numeric fg/bg still works (androcat native)', async (t) => {
   const buf = await renderApp(createElement('text', { fg: 3, bg: 9 }, 'hi'))
   t.is(Cell.getFg(attrAt(buf, 0, 0)), 3)
   t.is(Cell.getBg(attrAt(buf, 0, 0)), 9)
 })
 
-test('ink compat: numeric styles bitfield still works (ratatat native)', async (t) => {
+test('ink compat: numeric styles bitfield still works (androcat native)', async (t) => {
   const buf = await renderApp(
     createElement('text', { styles: 3 }, 'hi'), // bold+dim
   )
@@ -172,16 +172,16 @@ test('ink compat: numeric styles bitfield still works (ratatat native)', async (
 
 test('ink compat: color prop survives re-render (commitUpdate)', async (t) => {
   const root = new LayoutNode()
-  const container = RatatatReconciler.createContainer(root, 0, null, false, null, '', () => {}, null)
+  const container = AndrocatReconciler.createContainer(root, 0, null, false, null, '', () => {}, null)
 
   // Initial render
   await React.act(async () => {
-    RatatatReconciler.updateContainer(createElement('text', { color: 'green' }, 'hello'), container, null, () => {})
+    AndrocatReconciler.updateContainer(createElement('text', { color: 'green' }, 'hello'), container, null, () => {})
   })
 
   // Re-render with different text (triggers commitTextUpdate + commitUpdate)
   await React.act(async () => {
-    RatatatReconciler.updateContainer(createElement('text', { color: 'green' }, 'world'), container, null, () => {})
+    AndrocatReconciler.updateContainer(createElement('text', { color: 'green' }, 'world'), container, null, () => {})
   })
 
   root.calculateLayout(COLS, ROWS)

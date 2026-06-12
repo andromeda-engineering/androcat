@@ -4,20 +4,20 @@ import { render } from '../dist/react.js'
 
 // Instance API tests — verify render() returns Ink-compatible { rerender, unmount, waitUntilExit }
 // These tests run headless: no TTY, no alternate screen.
-// RatatatApp.start() calls TerminalGuard which needs a real TTY — we patch it out.
+// AndrocatApp.start() calls TerminalGuard which needs a real TTY — we patch it out.
 
-import { RatatatApp } from '@andromeda-eng/androcat-core'
+import { AndrocatApp } from '@andromeda-eng/androcat-core'
 
 // Patch start/stop to skip TerminalGuard (no TTY in test env)
-const origStart = RatatatApp.prototype.start
-const origStop = RatatatApp.prototype.stop
-RatatatApp.prototype.start = function () {
+const origStart = AndrocatApp.prototype.start
+const origStop = AndrocatApp.prototype.stop
+AndrocatApp.prototype.start = function () {
   // @ts-ignore
   if (this.isRunning) return
   // @ts-ignore
   this.isRunning = true
 }
-RatatatApp.prototype.stop = function () {
+AndrocatApp.prototype.stop = function () {
   // @ts-ignore
   this.isRunning = false
   // flush buffered output

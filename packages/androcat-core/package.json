@@ -9,8 +9,8 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MyNameReallySux/andromeda.git",
-    "directory": "packages/public/androcat-core"
+    "url": "https://github.com/andromeda-engineering/androcat.git",
+    "directory": "packages/androcat-core"
   },
   "engines": {
     "node": ">=20"

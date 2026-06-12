@@ -1,0 +1,21 @@
+{
+  "name": "androcat",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Androcat — a TUI render engine: TypeScript/React (Ink-compatible) authoring on a native Rust diff engine, in-process via napi.",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andromeda-engineering/androcat.git"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@10.34.1",
+  "scripts": {
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint"
+  }
+}

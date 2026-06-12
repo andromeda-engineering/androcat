@@ -6,7 +6,9 @@ settings:
 
 importers:
 
-  .:
+  .: {}
+
+  packages/androcat-core:
     dependencies:
       eventemitter3:
         specifier: ^5.0.4
@@ -39,6 +41,70 @@ importers:
       oxlint:
         specifier: ^1.14.0
         version: 1.69.0
+      typescript:
+        specifier: ^5.9.2
+        version: 5.9.3
+
+  packages/androcat-react:
+    dependencies:
+      '@andromeda-eng/androcat-core':
+        specifier: workspace:*
+        version: link:../androcat-core
+      cli-boxes:
+        specifier: ^4.0.1
+        version: 4.0.1
+      react:
+        specifier: ^19.2.4
+        version: 19.2.7
+      react-reconciler:
+        specifier: ^0.33.0
+        version: 0.33.0(react@19.2.7)
+      scheduler:
+        specifier: ^0.27.0
+        version: 0.27.0
+      string-width:
+        specifier: ^8.2.0
+        version: 8.2.1
+      yoga-layout-prebuilt:
+        specifier: ^1.10.0
+        version: 1.10.0
+    devDependencies:
+      '@oxc-node/core':
+        specifier: ^0.0.35
+        version: 0.0.35(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)
+      '@types/cli-boxes':
+        specifier: ^1.0.0
+        version: 1.0.0
+      '@types/node':
+        specifier: ^25.3.3
+        version: 25.9.3
+      '@types/react':
+        specifier: ^19.2.14
+        version: 19.2.17
+      '@types/react-reconciler':
+        specifier: ^0.33.0
+        version: 0.33.0(@types/react@19.2.17)
+      '@types/scheduler':
+        specifier: ^0.26.0
+        version: 0.26.0
+      '@types/yoga-layout':
+        specifier: ^1.9.7
+        version: 1.9.7
+      '@xterm/headless':
+        specifier: ^5.5.0
+        version: 5.5.0
+      ava:
+        specifier: ^7.0.0
+        version: 7.0.0
+      eventemitter3:
+        specifier: ^5.0.4
+        version: 5.0.4
+      oxlint:
+        specifier: ^1.14.0
+        version: 1.69.0
+      react-test-renderer:
+        specifier: ^19.2.4
+        version: 19.2.7(react@19.2.7)
       typescript:
         specifier: ^5.9.2
         version: 5.9.3
@@ -846,16 +912,39 @@ packages:
   '@tybys/wasm-util@0.10.2':
     resolution: {integrity: sha512-RoBvJ2X0wuKlWFIjrwffGw1IqZHKQqzIchKaadZZfnNpsAYp2mM0h36JtPCjNDAHGgYez/15uMBpfGwchhiMgg==}
 
+  '@types/cli-boxes@1.0.0':
+    resolution: {integrity: sha512-2zYb4lPvLI+uI04+QKz2orF6EfSUe7dzRTwUJoZ96alMYXnfHS83q9Dl/FjbCNwdKXlNXQHDdq8UoW9B+numHA==}
+
   '@types/estree@1.0.9':
     resolution: {integrity: sha512-GhdPgy1el4/ImP05X05Uw4cw2/M93BCUmnEvWZNStlCzEKME4Fkk+YpoA5OiHNQmoS7Cafb8Xa3Pya8m1Qrzeg==}
 
   '@types/node@25.9.3':
     resolution: {integrity: sha512-603BddQMv3pUcr4U2dhujk83N2tTDVr/34wII2B6bJy6g+8WD6yUb11jszNs0gdi4PesVWl7ABt8nYMVpnLUcg==}
 
+  '@types/react-reconciler@0.33.0':
+    resolution: {integrity: sha512-HZOXsKT0tGI9LlUw2LuedXsVeB88wFa536vVL0M6vE8zN63nI+sSr1ByxmPToP5K5bukaVscyeCJcF9guVNJ1g==}
+    peerDependencies:
+      '@types/react': '*'
+
+  '@types/react@19.2.17':
+    resolution: {integrity: sha512-MXfmqaVPEVgkBT/aY0aGCkRWWtByiYQXo3xdQ8r5RzuFrPiRn8Gar2tQdXSUQ2GKV3bkXckek89V8wQBY2Q/Aw==}
+
+  '@types/scheduler@0.26.0':
+    resolution: {integrity: sha512-WFHp9YUJQ6CKshqoC37iOlHnQSmxNc795UhB26CyBBttrN9svdIrUjl/NjnNmfcwtncN0h/0PPAFWv9ovP8mLA==}
+
+  '@types/yoga-layout@1.9.2':
+    resolution: {integrity: sha512-S9q47ByT2pPvD65IvrWp7qppVMpk9WGMbVq9wbWZOHg6tnXSD4vyhao6nOSBwwfDdV2p3Kx9evA9vI+XWTfDvw==}
+
+  '@types/yoga-layout@1.9.7':
+    resolution: {integrity: sha512-TlYNIa9XHCGYRqVrijiDVj72Sc4Yd9At0NYEaHm8Su94GwcsXRq5y1AhA8tZUVNXYRCNpGWuOWI4VQ+R58MgUw==}
+
   '@vercel/nft@1.10.2':
     resolution: {integrity: sha512-w+WyX5Ulmj4dtTZrxaulqrjaLZHSbnPzx75SJsTNYmotKsqn1JlLnDJa+lz5hn90HJofhl/2MAtw0mCrgM3qYw==}
     engines: {node: '>=20'}
     hasBin: true
+
+  '@xterm/headless@5.5.0':
+    resolution: {integrity: sha512-5xXB7kdQlFBP82ViMJTwwEc3gKCLGKR/eoxQm4zge7GPBl86tCdI0IdPJjoKd8mUSFXz5V7i/25sfsEkP4j46g==}
 
   abbrev@3.0.1:
     resolution: {integrity: sha512-AO2ac6pjRB3SJmGJo+v5/aK6Omggp6fsLrs6wN9bd35ulu4cCwaAU9+7ZhXjeqHVkaHThLuzH0nZr0YpCDhygg==}
@@ -968,6 +1057,10 @@ packages:
   ci-parallel-vars@1.0.1:
     resolution: {integrity: sha512-uvzpYrpmidaoxvIQHM+rKSrigjOe9feHYbw4uOI2gdfe1C3xIlxO+kVXq83WQWNniTf8bAxVpy+cQeFQsMERKg==}
 
+  cli-boxes@4.0.1:
+    resolution: {integrity: sha512-5IOn+jcCEHEraYolBPs/sT4BxYCe2nHg374OPiItB1O96KZFseS2gthU4twyYzeDcFew4DaUM/xwc5BQf08JJw==}
+    engines: {node: '>=18.20 <19 || >=20.10'}
+
   cli-truncate@5.2.0:
     resolution: {integrity: sha512-xRwvIOMGrfOAnM1JYtqQImuaNtDEv9v6oIYAs4LIHwTiKee8uwvIi363igssOC0O5U04i4AlENs79LQLu9tEMw==}
     engines: {node: '>=20'}
@@ -1010,6 +1103,9 @@ packages:
   convert-to-spaces@2.0.1:
     resolution: {integrity: sha512-rcQ1bsQO9799wq24uE5AM2tAILy4gXGIK/njFWcVQkGNZ96edlpY+A7bjwvzjYvLDyzmG1MmMLZhpcsb+klNMQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+
+  csstype@3.2.3:
+    resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
 
   currently-unhandled@0.4.1:
     resolution: {integrity: sha512-/fITjgjGU50vjQ4FH6eUoYu+iUoUKIXws2hL15JJpIR+BbTxaXQsMuuyjtNh2WqsSBS5nsaZHFsFecyw5CCAng==}
@@ -1284,8 +1380,8 @@ packages:
     engines: {node: ^18.17.0 || >=20.5.0}
     hasBin: true
 
-  obug@2.1.2:
-    resolution: {integrity: sha512-AWGB9WFcRXOQs48Z/udjI5ZcZMHXwX8XPByNpOydgcGsDLIzjGizhoMWJyKAWze7AVW/2W1i+/gPX4YtKe5cyg==}
+  obug@2.1.3:
+    resolution: {integrity: sha512-9miFgM2OFba7hB+pRgvtV84pYTBaoTHohvmIgiRt6dRIzbwEOIaNaP+dIlGs2fNFoB0SeISs0Jz5WFVRid6Xyg==}
     engines: {node: '>=12.20.0'}
 
   oxlint@1.69.0:
@@ -1340,6 +1436,24 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
+  react-is@19.2.7:
+    resolution: {integrity: sha512-kZFnouyVv7eP/Phmrlo9FK+zcAdriZJvzxXHF1Sl1P377WSGe2G/JxVolhTrB/jeV47lKImhNUsijjHAAbcl/A==}
+
+  react-reconciler@0.33.0:
+    resolution: {integrity: sha512-KetWRytFv1epdpJc3J4G75I4WrplZE5jOL7Yq0p34+OVOKF4Se7WrdIdVC45XsSSmUTlht2FM/fM1FZb1mfQeA==}
+    engines: {node: '>=0.10.0'}
+    peerDependencies:
+      react: ^19.2.0
+
+  react-test-renderer@19.2.7:
+    resolution: {integrity: sha512-U4TyPDJ9MsC8rFimXuJum8w40aPc9kbOZYO8Pc2/4A884i8hwJsMNA/JNyuOc/f2/37wHvk7HjpVl1V4re7Dig==}
+    peerDependencies:
+      react: ^19.2.7
+
+  react@19.2.7:
+    resolution: {integrity: sha512-HNe9WslTbXmFK8o8cmwgAeJFSBvt1bPdHCVKtaaV+WlAN36mpT4hcRpwbf3fY56ar2oIXzsBpOAiIRHAdY0OlQ==}
+    engines: {node: '>=0.10.0'}
+
   resolve-cwd@3.0.0:
     resolution: {integrity: sha512-OrZaX2Mb+rJCpH/6CpSqt9xFVpN++x01XnN2ie9g6P5/3xelLAkXWVADpdz1IHD/KFfEXyE6V0U01OQ3UO2rEg==}
     engines: {node: '>=8'}
@@ -1357,6 +1471,9 @@ packages:
 
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
+
+  scheduler@0.27.0:
+    resolution: {integrity: sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q==}
 
   semver@7.8.4:
     resolution: {integrity: sha512-rUCObTnP32Q08R2uuIrt7r9PlEonuTmtuXYcW6s5kjdlj3xbnwe+21yXptAUYcMAABLkYYTtnmzb3w3EDZfueA==}
@@ -1479,6 +1596,10 @@ packages:
   yargs@18.0.0:
     resolution: {integrity: sha512-4UEqdc2RYGHZc7Doyqkrqiln3p9X2DZVxaGbwhn2pi7MrRagKaOcIKe8L3OxYcbhXLgLFUS3zAYuQjKBQgmuNg==}
     engines: {node: ^20.19.0 || ^22.12.0 || >=23}
+
+  yoga-layout-prebuilt@1.10.0:
+    resolution: {integrity: sha512-YnOmtSbv4MTf7RGJMK0FvZ+KD8OEe/J5BNnR0GHhD8J/XcG/Qvxgszm0Un6FTHWW4uHlTgP0IztiXQnGyIR45g==}
+    engines: {node: '>=8'}
 
 snapshots:
 
@@ -1642,7 +1763,7 @@ snapshots:
       emnapi: 1.11.0
       es-toolkit: 1.47.1
       js-yaml: 4.2.0
-      obug: 2.1.2
+      obug: 2.1.3
       semver: 7.8.4
       typanion: 3.14.0
     optionalDependencies:
@@ -2122,11 +2243,27 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
+  '@types/cli-boxes@1.0.0': {}
+
   '@types/estree@1.0.9': {}
 
   '@types/node@25.9.3':
     dependencies:
       undici-types: 7.24.6
+
+  '@types/react-reconciler@0.33.0(@types/react@19.2.17)':
+    dependencies:
+      '@types/react': 19.2.17
+
+  '@types/react@19.2.17':
+    dependencies:
+      csstype: 3.2.3
+
+  '@types/scheduler@0.26.0': {}
+
+  '@types/yoga-layout@1.9.2': {}
+
+  '@types/yoga-layout@1.9.7': {}
 
   '@vercel/nft@1.10.2':
     dependencies:
@@ -2146,6 +2283,8 @@ snapshots:
       - encoding
       - rollup
       - supports-color
+
+  '@xterm/headless@5.5.0': {}
 
   abbrev@3.0.1: {}
 
@@ -2261,6 +2400,8 @@ snapshots:
 
   ci-parallel-vars@1.0.1: {}
 
+  cli-boxes@4.0.1: {}
+
   cli-truncate@5.2.0:
     dependencies:
       slice-ansi: 8.0.0
@@ -2302,6 +2443,8 @@ snapshots:
   content-type@2.0.0: {}
 
   convert-to-spaces@2.0.1: {}
+
+  csstype@3.2.3: {}
 
   currently-unhandled@0.4.1:
     dependencies:
@@ -2507,7 +2650,7 @@ snapshots:
     dependencies:
       abbrev: 3.0.1
 
-  obug@2.1.2: {}
+  obug@2.1.3: {}
 
   oxlint@1.69.0:
     optionalDependencies:
@@ -2561,6 +2704,21 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
+  react-is@19.2.7: {}
+
+  react-reconciler@0.33.0(react@19.2.7):
+    dependencies:
+      react: 19.2.7
+      scheduler: 0.27.0
+
+  react-test-renderer@19.2.7(react@19.2.7):
+    dependencies:
+      react: 19.2.7
+      react-is: 19.2.7
+      scheduler: 0.27.0
+
+  react@19.2.7: {}
+
   resolve-cwd@3.0.0:
     dependencies:
       resolve-from: 5.0.0
@@ -2574,6 +2732,8 @@ snapshots:
       queue-microtask: 1.2.3
 
   safer-buffer@2.1.2: {}
+
+  scheduler@0.27.0: {}
 
   semver@7.8.4: {}
 
@@ -2683,3 +2843,7 @@ snapshots:
       string-width: 7.2.0
       y18n: 5.0.8
       yargs-parser: 22.0.0
+
+  yoga-layout-prebuilt@1.10.0:
+    dependencies:
+      '@types/yoga-layout': 1.9.2

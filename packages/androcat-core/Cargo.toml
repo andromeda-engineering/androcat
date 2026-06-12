@@ -5,7 +5,7 @@ edition = "2021"
 license = "MIT"
 authors = ["Andromeda — vendored from geoffmiller/ratatat (MIT)"]
 description = "Native Rust diff engine for Androcat, the Andromeda TUI render engine."
-repository = "https://github.com/MyNameReallySux/andromeda"
+repository = "https://github.com/andromeda-engineering/androcat"
 
 # Standalone workspace: isolates this vendored napi crate from the root Andromeda
 # cargo workspace until house-tooling + CI integration lands (tracked separately).

@@ -31,9 +31,10 @@ jobs:
         run: pnpm build
 
       - name: Test
-        # Allocate a pseudo-TTY: the native engine queries the terminal size
-        # (TIOCGWINSZ), which fails with EAGAIN on a headless runner without a tty.
-        run: script -e -q -c "pnpm test" /dev/null
+        # The native engine queries the terminal size (TIOCGWINSZ). A headless
+        # runner has no tty, so allocate a pseudo-tty via script(1) and give it a
+        # concrete size with stty (a bare pty reports 0x0, failing size > 0 checks).
+        run: script -e -q -c "stty rows 24 cols 80; pnpm test" /dev/null
 
       - name: Lint
         run: pnpm lint

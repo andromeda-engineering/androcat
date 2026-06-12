@@ -1,0 +1,24 @@
+[package]
+name = "andromeda-androcat-engine"
+version = "0.0.0"
+edition = "2021"
+license = "MIT"
+authors = ["Andromeda — vendored from geoffmiller/ratatat (MIT)"]
+description = "Native Rust diff engine for Androcat, the Andromeda TUI render engine."
+repository = "https://github.com/MyNameReallySux/andromeda"
+
+# Standalone workspace: isolates this vendored napi crate from the root Andromeda
+# cargo workspace until house-tooling + CI integration lands (tracked separately).
+[workspace]
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+crossterm     = "0.29.0"
+napi          = "3.0.0"
+napi-derive   = "3.0.0"
+unicode-width = "0.2.0"
+
+[build-dependencies]
+napi-build = "2"

@@ -31,7 +31,9 @@ jobs:
         run: pnpm build
 
       - name: Test
-        run: pnpm test
+        # Allocate a pseudo-TTY: the native engine queries the terminal size
+        # (TIOCGWINSZ), which fails with EAGAIN on a headless runner without a tty.
+        run: script -e -q -c "pnpm test" /dev/null
 
       - name: Lint
         run: pnpm lint

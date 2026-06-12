@@ -58,6 +58,40 @@ export function resolveColor(color: number | string | undefined): number {
   return 255 // unrecognised → terminal default
 }
 
+// ── ANSI SGR encoding ─────────────────────────────────────────────────────────
+// These mirror the native renderer's escape semantics exactly (see
+// androcat-core/src/ansi.rs) so any string-mode output matches what the live
+// `Renderer` writes to a real terminal. Keep them in sync with that file.
+
+/** Foreground SGR. 255 = terminal default (`\x1b[39m`); otherwise 256-color. */
+export function fgAnsi(color: number): string {
+  return color === 255 ? '\x1b[39m' : `\x1b[38;5;${color}m`
+}
+
+/** Background SGR. 255 = terminal default (`\x1b[49m`); otherwise 256-color. */
+export function bgAnsi(color: number): string {
+  return color === 255 ? '\x1b[49m' : `\x1b[48;5;${color}m`
+}
+
+// Style bitfield → SGR, in the same bit order the native renderer emits.
+const STYLE_BITS: ReadonlyArray<readonly [number, string]> = [
+  [1, '\x1b[1m'], // Bold
+  [2, '\x1b[2m'], // Dim
+  [4, '\x1b[3m'], // Italic
+  [8, '\x1b[4m'], // Underline
+  [16, '\x1b[5m'], // Blink
+  [32, '\x1b[7m'], // Invert
+  [64, '\x1b[8m'], // Hidden
+  [128, '\x1b[9m'], // Strikethrough
+]
+
+/** SGR escapes for a style bitfield (no leading reset). Empty when no bits set. */
+export function styleBitsAnsi(styles: number): string {
+  let out = ''
+  for (const [bit, esc] of STYLE_BITS) if (styles & bit) out += esc
+  return out
+}
+
 export type Styles = {
   position?: 'absolute' | 'relative' | 'static'
   top?: number | string

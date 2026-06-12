@@ -100,3 +100,37 @@ test('renderToString: wide chars do not throw and preserve adjacency', (t) => {
 
   t.true(out.includes('A🐭B界C'))
 })
+
+// ─── ansi mode ──────────────────────────────────────────────────────────────────
+
+test('renderToString: default mode emits no escape sequences', (t) => {
+  const out = renderToString(React.createElement('text', { color: 'green', bold: true }, 'hi'), { columns: 10, rows: 2 })
+  t.false(out.includes('\x1b['), 'plain mode is escape-free')
+  t.true(out.includes('hi'))
+})
+
+test('renderToString: ansi mode wraps content in fg + bold and resets', (t) => {
+  const out = renderToString(React.createElement('text', { color: 'green', bold: true }, 'hi'), {
+    columns: 10,
+    rows: 2,
+    ansi: true,
+  })
+  t.true(out.includes('\x1b[38;5;2m'), 'green foreground')
+  t.true(out.includes('\x1b[1m'), 'bold')
+  t.true(out.includes('hi'), 'glyphs preserved')
+  t.true(out.includes('\x1b[0m'), 'reset emitted')
+})
+
+test('renderToString: ansi mode background colour is emitted', (t) => {
+  const out = renderToString(React.createElement('box', { backgroundColor: 'red', width: 4, height: 1 }), {
+    columns: 6,
+    rows: 2,
+    ansi: true,
+  })
+  t.true(out.includes('\x1b[48;5;1m'), 'red background')
+})
+
+test('renderToString: ansi mode collapses an all-default render to empty', (t) => {
+  const out = renderToString(React.createElement('box', {}), { columns: 20, rows: 3, ansi: true })
+  t.is(out, '')
+})
